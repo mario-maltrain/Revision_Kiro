@@ -12,9 +12,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'Continue'
-
 $Version = '1.0.0'
-$Classification = 'Internal'
 $RunId = 'CP09A-GEOAI-COMPOSITE-' + (Get-Date -Format 'yyyyMMdd-HHmmss')
 $FinalRoot = Join-Path $OutputRoot $RunId
 $StagingRoot = Join-Path $OutputRoot ('.staging-' + $RunId)
