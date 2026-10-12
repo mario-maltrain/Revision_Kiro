@@ -9,7 +9,6 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $ScriptName = "Application_Governance_Controls"
 $ScriptVersion = "1.2.2"
-$Classification = "BHP Internal"
 $RunId = "APP-GOV-CONTROLS-{0}" -f (Get-Date -Format "yyyyMMdd-HHmmss")
 function Assert-PathValue { param([string]$Value,[string]$Name) if([string]::IsNullOrWhiteSpace($Value)){throw ("{0} is empty." -f $Name)} if(-not [IO.Path]::IsPathFullyQualified($Value)){throw ("{0} must be absolute." -f $Name)} }
 function Relative-Path { param([string]$Base,[string]$Full) return [IO.Path]::GetRelativePath([IO.Path]::GetFullPath($Base),[IO.Path]::GetFullPath($Full)) }
