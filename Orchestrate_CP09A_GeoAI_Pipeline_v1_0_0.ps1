@@ -38,7 +38,6 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $Version = '1.0.0'
-$Classification = 'Internal'
 if ([string]::IsNullOrWhiteSpace($MasterRunId)) { $MasterRunId = 'CP09A-GEOAI-PIPELINE-' + (Get-Date -Format 'yyyyMMdd-HHmmss') }
 $RunId = $MasterRunId
 $StagingRoot = Join-Path $OutputRoot ('.staging-' + $RunId)
