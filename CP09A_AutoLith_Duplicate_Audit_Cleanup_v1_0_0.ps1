@@ -11,7 +11,6 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'Continue'
 
 $Version = '1.0.0'
-$Classification = 'Internal'
 $RunId = 'CP09A-DUPLICATE-CLEANUP-' + (Get-Date -Format 'yyyyMMdd-HHmmss')
 $Mode = if ($ExecuteCleanup) { 'EXECUTE' } else { 'AUDIT_ONLY' }
 $InstalledFolder = Join-Path $ApplicationRoot '00_Script\Repository_Cleanup'
