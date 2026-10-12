@@ -11,7 +11,6 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'Continue'
 
 $Version = '1.3.0'
-$Classification = 'Internal'
 $RunId = 'CP09A-REPOSITORY-INVENTORY-' + (Get-Date -Format 'yyyyMMdd-HHmmss')
 $FamilyPattern = 'GeoAI_CP09A_Repository_Inventory*.ps1'
 $InstalledName = 'GeoAI_CP09A_Repository_Inventory_v1_3_0.ps1'
