@@ -19,7 +19,6 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'Continue'
 
 $Version = '1.0.1'
-$Classification = 'Internal'
 $RunId = 'CP09A-GEOAI-CONSOLIDATION-' + (Get-Date -Format 'yyyyMMdd-HHmmss')
 # Shipped literal default used as the last-resort fallback in the hash resolution order.
 $DefaultExpectedZipSHA256 = '5EB627FAB47257294C89289757C36E62276D76E20CB3818E7DE57EB0D8B5FF08'
