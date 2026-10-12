@@ -11,7 +11,6 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $ScriptName = "Verify_CP09A_Integration_Register"
 $Version = "1.0.0"
-$Classification = "BHP Internal"
 $RunId = "REGISTER-VERIFY-{0}" -f (Get-Date -Format "yyyyMMdd-HHmmss")
 $StagingRoot = Join-Path $OutputRoot (".staging-" + $RunId)
 $FinalRoot = Join-Path $OutputRoot $RunId
