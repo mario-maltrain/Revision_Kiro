@@ -11,7 +11,6 @@ param(
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
-$Classification = "BHP Internal"
 $Version = "1.0.2"
 $RunId = "CROSS-EXPORT-COMPARE-{0}" -f (Get-Date -Format "yyyyMMdd-HHmmss")
 function Assert-AbsolutePath { param([string]$Value,[string]$Name) if([string]::IsNullOrWhiteSpace($Value)){throw ("{0} is empty." -f $Name)} if(-not [IO.Path]::IsPathFullyQualified($Value)){throw ("{0} must be absolute." -f $Name)} }
