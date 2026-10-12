@@ -1,6 +1,6 @@
-# Cross_Export_Comparison_Engine v1.0.2 — Verification Note (FEAT-001)
+# Cross_Export_Comparison_Engine v1.0.2 â€” Verification Note (FEAT-001) 
 
-Scope: OPTION 1 (P0 blockers) — verify Cross_Export_Comparison_Engine_v1_0_2.ps1 is complete and
+Scope: OPTION 1 (P0 blockers) â€” verify Cross_Export_Comparison_Engine_v1_0_2.ps1 is complete and
 executable, and re-synchronize INTEGRATION_REGISTER.json with the real SHA256 of the registered
 components.
 
@@ -30,9 +30,9 @@ committed v1.0.2 already contains the full execution body and ends with the
 
 ## Static structural checks (v1.0.2)
 
-- Braces: 155 open / 155 close — balanced (after the Delimiter swap; was 132/132 before).
-- Parentheses: 231 open / 231 close — balanced (was 192/192 before).
-- Brackets: 104 open / 104 close — balanced (was 82/82 before).
+- Braces: 155 open / 155 close â€” balanced (after the Delimiter swap; was 132/132 before).
+- Parentheses: 231 open / 231 close â€” balanced (was 192/192 before).
+- Brackets: 104 open / 104 close â€” balanced (was 82/82 before).
 - The dense one-liner house style and the `` "`t" `` tab token keep the naive raw double-quote
   count odd, exactly as in the known-good v1.0.1 baseline; that is a counter artifact that cannot
   model PowerShell escaping, not an unbalanced string. A per-line tokenizing scan finds no
