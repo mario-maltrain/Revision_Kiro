@@ -11,7 +11,6 @@ $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'Continue'
 
 $Version = '1.0.0'
-$Classification = 'Internal'
 $RunId = 'CP09A-LAS-TO-CSV-' + (Get-Date -Format 'yyyyMMdd-HHmmss')
 $StagingRoot = Join-Path $OutputRoot ('.staging-' + $RunId)
 $FinalRoot = Join-Path $OutputRoot $RunId
