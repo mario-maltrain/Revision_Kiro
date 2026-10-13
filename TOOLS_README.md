@@ -1,6 +1,6 @@
 # CP09A / GeoAI Pipeline Tools
 
-Four standalone PowerShell tools added to the CP09A/GeoAI family. Each follows the
+Five standalone PowerShell tools added to the CP09A/GeoAI family. Each follows the
 established house conventions: `#requires` directive, `[CmdletBinding()]`, `param()`
 with Windows absolute-path defaults, `Set-StrictMode -Version Latest`,
 `$ErrorActionPreference='Stop'`, `$Version='1.0.0'`, `$Classification`, a timestamped
@@ -210,3 +210,51 @@ text and numeric data that must not change are never touched.
 plus the evidence record `Normalization_Map.csv`, `Summary.json`, `Summary.txt`,
 `SHA256SUMS.txt`. The SHA256 manifest hashes BOTH the evidence record files AND the
 normalized `CSV\` data outputs (data outputs are listed with a `CSV/<relative>` prefix).
+
+---
+
+## TOOL v - Deduplicate_CP09A_Unclassified_v1_0_0.ps1
+
+**Purpose.** Detect EXACT SHA256 duplicate files related to any `99_UNCLASSIFIED`
+folder and govern the duplicates without ever deleting. The tool only ever reports or
+quarantines; it never removes a file and never moves the chosen canonical copy.
+
+**How it works.**
+- Recursively scans `-RepositoryRoot` using inventory-style directory/file exclusions,
+  and the quarantine root is skipped so prior runs are never re-ingested.
+- Computes a per-file SHA256 and runs `Group-Object` by hash, keeping only the groups
+  with `Count > 1` (true byte-for-byte duplicates).
+- FILTERS those groups to the ones having at least one copy whose relative path
+  contains a segment exactly `99_UNCLASSIFIED` (case-insensitive); any group with no
+  such copy is ignored, so the tool governs only unclassified-related duplication.
+- **Canonical choice priority.** For each surviving group it picks the copy to keep by
+  (1) preferring a copy OUTSIDE `99_UNCLASSIFIED`, then (2) tie-breaking on the newest
+  `LastWriteTime`, then (3) tie-breaking on the shortest path. Residual ambiguity
+  (no single copy wins) yields `REVIEW_REQUIRED` for that group.
+- **Decision.** Emits `PASS`, or `REVIEW_REQUIRED` when a canonical cannot be chosen
+  unambiguously for one or more groups.
+- **Audit-only is the DEFAULT.** With no switches (or with `-AuditOnly`) the tool
+  reports the `Duplicate_Groups.csv` / `Duplicate_Files.csv` content and the total
+  recoverable bytes (the sum over groups of `(copies - 1) * size`), writes nothing, and
+  ends with `AUDITONLY PASS: NO FILES OR FOLDERS CREATED.`
+- **Apply mode.** `-Apply` MOVES the non-canonical duplicates into a quarantine folder
+  via staging -> promote with no-overwrite guards and a `Test-IsUnderRoot` quarantine
+  safeguard, leaving a `Quarantine_Move_Map.csv` recording what moved from where. The
+  tool NEVER deletes and never moves the canonical. The write path is gated by
+  `$ExecuteMode = (-Apply present and not -AuditOnly)`.
+
+**Requires:** PowerShell 7.4.
+
+**Key parameters.**
+- `-RepositoryRoot` - the root tree to scan.
+- `-QuarantineRoot` - destination root under which the run folder is promoted for `-Apply`.
+- `-ApplicationRoot` - application root under which the governed script is self-installed.
+- `-AuditOnly` - scan and report, write nothing. This is the default behavior and, when
+  supplied, forces audit-only even if `-Apply` is present.
+- `-Apply` - execute switch gating the staging -> promote quarantine move.
+
+**Outputs (apply mode).** Under `<QuarantineRoot>\<RunId>\`: the quarantined
+`Quarantine\...` copies plus a `_Dedup_Record` folder with `Duplicate_Groups.csv`,
+`Duplicate_Files.csv`, `Quarantine_Move_Map.csv`, `Summary.json`, `Summary.txt`,
+`SHA256SUMS.txt`. The SHA256 manifest covers BOTH the record files AND the quarantined
+data outputs (data outputs are listed with a `Quarantine/<relative>` prefix).
